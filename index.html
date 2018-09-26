@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://unpkg.com/modern-normalize@0.5.0/modern-normalize.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/preflight.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
+
+    <title>analytics </title>
+    <!-- Start of Async Drift Code -->
+
+    <!-- End of Async Drift Code -->
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-125634644-1', 'auto');
+        ga('send', 'pageview');
+        console.log("pageview logged: ");
+
+
+    </script>
+
+    <!-- <script>
+        window['_fs_debug'] = false;
+        window['_fs_host'] = 'fullstory.com';
+        window['_fs_org'] = 'F38HB';
+        window['_fs_namespace'] = 'FS';
+        (function (m, n, e, t, l, o, g, y) {
+            if (e in m) { if (m.console && m.console.log) { m.console.log('FullStory namespace conflict. Please set window["_fs_namespace"].'); } return; }
+            g = m[e] = function (a, b) { g.q ? g.q.push([a, b]) : g._api(a, b); }; g.q = [];
+            o = n.createElement(t); o.async = 1; o.src = 'https://' + _fs_host + '/s/fs.js';
+            y = n.getElementsByTagName(t)[0]; y.parentNode.insertBefore(o, y);
+            g.identify = function (i, v) { g(l, { uid: i }); if (v) g(l, v) }; g.setUserVars = function (v) { g(l, v) }; g.event = function (i, v) { g('event', { n: i, p: v }) };
+            g.shutdown = function () { g("rec", !1) }; g.restart = function () { g("rec", !0) };
+            g.consent = function (a) { g("consent", !arguments.length || a) };
+            g.identifyAccount = function (i, v) { o = 'account'; v = v || {}; v.acctId = i; g(o, v) };
+            g.clearUserCookie = function () { };
+        })(window, document, window['_fs_namespace'], 'script', 'user');
+    </script> -->
+
+</head>
+
+<body>
+    <h1>One analytics example to rulue them all</h1>
+    <div class="flex flex-col content-center items-center justify-center">
+        <div>
+            <button type="button" class="flex-1  ml-4 shadow-lg bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+                id="campus-1">Chat now!</button>
+        </div>
+    </div>
+
+</body>
+<script>
+    "use strict";
+
+    !function () {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
+                t.factory = function (e) {
+                    return function () {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function (e) {
+                    t[e] = t.factory(e);
+                }), t.load = function (t) {
+                    var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                    o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                    var i = document.getElementsByTagName("script")[0];
+                    i.parentNode.insertBefore(o, i);
+                };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('nh3abupcrxrh');
+</script>
+<script>
+    ; (() => {
+        const $ = document.body
+        const driftUserId = 1177958
+        const jokeButton = $.querySelector('#campus-1').addEventListener(
+            'click',
+            () => {
+                location = '#campus-1'
+            }
+        )
+    }
+    )()
+
+</script>
+<script type="text/javascript" id="">
+    drift.on('ready', function (api) {
+        drift.on('startConversation', function (event) {
+
+            drift.track('track', function (a) { console.log(a) })
+            drift.track('click', function (a) { return a })
+            ga('send', 'pageview');
+            console.log("pageview ------- logged: ")
+            console.log(' this is this ', this)
+            ga('send', 'event', {
+                eventCategory: 'Drift link------- Click',
+                eventAction: 'Clicked -----Button',
+                eventLabel: event.target
+            });
+
+
+
+        })
+    })
+</script>
+<!-- <script type="text/javascript" id="">
+    drift.on("ready", function (b, c) {
+        window.drift.on("startConversation", function (a) {
+            console.log("User started a new conversation " + a.conversationId);
+            window.ga("send", "event", "Drift", "startConversation")
+        });
+        window.drift.on("scheduling:meetingBooked", function (a) {
+            console.log("user booked a meeting with " + a.teamMember.name);
+            window.ga("send", "event", "Drift", "MeetingBooked")
+        });
+        window.drift.on("emailCapture", function (a) {
+            console.log("user identified as: " + a.data.email);
+            window.ga("send", "event", "Drift", "emailCaptured")
+        })
+    });</script> -->
+<!-- <script type="text/javascript" id="">
+    drift.on('ready', function (api) {
+
+        drift.on('startConversation', function (event) {
+            
+            ga('create', 'UA-125634644-1', 'auto');
+            ga('send', 'pageview');
+            console.log("pageview logged: ");
+            ga('send', 'event', {
+                eventCategory: 'Drift Conversations',
+                eventAction: 'Started Conversation',
+                eventLabel: event.conversationId,
+            });
+
+
+            ga('send', 'event', {
+                eventCategory: 'Drift Button Click',
+                eventAction: 'Clicked Button',
+                eventLabel: event.target,
+            });
+
+        })
+    })
+
+
+</script> -->
+<script type="text/javascript" id="">
+    window.dataLayer = {}
+    drift.on("ready", function (b, c, d) {
+        console.log('this is bbbbbbbb', b)
+        var o = Object.assign({ events: 'events' }, c.data)
+
+        console.log('this is ccccccc', o)
+
+        window.drift.on("startConversation", function (a) {
+            console.log('this is aaaaaaa', a)
+            console.log("User started a new conversation " + a.conversationId);
+            window.ga("send", "event", "Drift", "startConversation")
+        });
+        window.drift.on("click", function (evt) {
+            console.log('event this is at the bottom of index.html', evt)
+            window.ga('send', 'event', {
+                eventCategory: 'Drift link------- Click',
+                eventAction: 'Clicked -----Button',
+                eventLabel: evt.target
+            })
+        });
+        window.drift.on("scheduling:meetingBooked", function (a) {
+            console.log("user booked a meeting with " + a.teamMember.name);
+            window.ga("send", "event", "Drift", "MeetingBooked")
+        });
+        window.drift.on("emailCapture", function (a) {
+
+            console.log("user identified as: " + a.data.email);
+            console.log('a.data', a.data)
+            console.log('what is a', a)
+
+            window.ga("send", "event", "Drift", "emailCaptured")
+        })
+    });</script>
+
+</html>

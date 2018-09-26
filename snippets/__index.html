@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://unpkg.com/modern-normalize@0.5.0/modern-normalize.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/preflight.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss/dist/utilities.min.css" rel="stylesheet">
+    <title>Analytics </title>
+</head>
+
+<body>
+    <h1>One analytics example to rulue them all</h1>
+    <div class="flex flex-col content-center items-center justify-center">
+        <div>
+            <button type="button" class="flex-1  ml-4 shadow-lg bg-transparent hover:bg-blue text-blue-dark font-semibold hover:text-white py-2 px-4 border border-blue hover:border-transparent rounded"
+                id="book-a-demo-1-2">Chat now!</button>
+        </div>
+    </div>
+
+</body>
+<!-- Start of Async Drift Code -->
+
+<script>
+    "use strict";
+
+    !function () {
+        var t = window.driftt = window.drift = window.driftt || [];
+        if (!t.init) {
+            if (t.invoked) return void (window.console && console.error && console.error("Drift snippet included twice."));
+            t.invoked = !0, t.methods = ["identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on"],
+                t.factory = function (e) {
+                    return function () {
+                        var n = Array.prototype.slice.call(arguments);
+                        return n.unshift(e), t.push(n), t;
+                    };
+                }, t.methods.forEach(function (e) {
+                    t[e] = t.factory(e);
+                }), t.load = function (t) {
+                    var e = 3e5, n = Math.ceil(new Date() / e) * e, o = document.createElement("script");
+                    o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + n + "/" + t + ".js";
+                    var i = document.getElementsByTagName("script")[0];
+                    i.parentNode.insertBefore(o, i);
+                };
+        }
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    // GRUBHUB
+    drift.load('nh3abupcrxrh');
+
+</script>
+<!-- End of Async Drift Code -->
+<script type="text/javascript">
+    (function () {
+        var didInit = false;
+        function initMunchkin() {
+            if (didInit === false) {
+                didInit = true;
+                Munchkin.init('844-RKG-112');
+            }
+        }
+        var s = document.createElement('script');
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = '//munchkin.marketo.net/munchkin.js';
+        s.onreadystatechange = function () {
+            if (this.readyState == 'complete' || this.readyState == 'loaded') {
+                initMunchkin();
+            }
+        };
+        s.onload = initMunchkin;
+        document.getElementsByTagName('head')[0].appendChild(s);
+    })();
+</script>
+<script>
+    ; (() => {
+        const $ = document.body
+        const driftUserId = 1177958
+        const jokeButton = $.querySelector('#book-a-demo-1-2').addEventListener(
+            'click',
+            () => {
+                location = '#book-a-demo-1-2'
+            }
+        )
+    }
+    )()
+
+</script>
+
+</html>
