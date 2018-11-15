@@ -16,6 +16,23 @@ const getCookie = name => {
   return match ? match[1] : undefined
 }
 
+// function readCookie(name: string): string | null {
+//     let cookies = document.cookie.split('; ');
+//     let cookie = cookies.find( elem => elem.includes(name + '='));
+//     return cookie ? cookie.split('=')[1] : null
+// }
+
+// function writeCookie(key: string, value: string, options: CookieOptions) {
+//     let cookie = `${key}=${encodeURIComponent(value)}`;
+
+//     if (options.path) { cookie += `;path=${options.path}` }
+//     if (options.domain) { cookie += `;domain=${options.domain}` }
+//     if (options.maxAge) { cookie += `;max-age=${options.maxAge}` }
+//     if (options.expires) { cookie += `;expires=${options.expires}`}
+
+//     document.cookie = cookie;
+// }
+
 const setCookie = (name, value, days, domain, encode) => {
   const cDomain = typeof domain === "undefined" ? "" : `domain=${domain};`
   const expDate = new Date()
@@ -25,6 +42,11 @@ const setCookie = (name, value, days, domain, encode) => {
     eValue + (days === null ? "" : `; expires=${expDate.toUTCString()}`)
   document.cookie = `${name}=${cValue};${cDomain}path=/`
 }
+
+// function deleteCookie(key: string, options?: CookieOptions ): void {
+//     let deleteOptions = Object.assign({}, options, { maxAge: -1 });
+//     writeCookie(key, '', deleteOptions);
+// }
 
 /**
  *
