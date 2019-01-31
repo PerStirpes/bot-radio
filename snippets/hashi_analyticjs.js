@@ -1,4 +1,3 @@
-import { each } from './utils'
 
 window.analytics.ready(() => {
   const analytics = window.analytics || {
