@@ -1,0 +1,97 @@
+<!-- Functions to detect ecommerce platform or landing page content & personalize pages based on it -->
+<script>
+  
+  // Functions & variables called before </body> tag
+  function checkEcommercePlatform() {
+    
+    // Checking params
+    var url_string = window.location.href
+    var url = new URL(url_string);
+    var ecommercePlatformParamValue = url.searchParams.get("ecommerce_platform");
+
+    // Checking cookie
+    var ecommercePlatformCookieValue = readEcommercePlatformCookie("ecommerce_platform")
+    
+    var platformNames = ['magento', 'shopify'];
+    
+    if (platformNames.indexOf(ecommercePlatformParamValue) > -1) {
+      // The platform has been found in the params.
+      // Adding it as cookie for 1 year
+      createEcommercePlatformCookie("ecommerce_platform",ecommercePlatformParamValue,365);
+		
+      return ecommercePlatformParamValue
+      	
+    } else if (window.location.href.toLowerCase().indexOf("shopify") > -1){
+      // Currently visiting a Shopify page
+      createEcommercePlatformCookie("ecommerce_platform","shopify",365);
+      
+      return "shopify"
+      
+    } else if (window.location.href.toLowerCase().indexOf("magento") > -1){
+      // Currently visiting a Magento page
+      createEcommercePlatformCookie("ecommerce_platform","magento",365);
+      
+      return "magento"
+      
+    } else if (platformNames.indexOf(ecommercePlatformCookieValue) > -1) {
+      // The platform has been found in the cookies
+      return ecommercePlatformCookieValue;
+      
+    } else {
+    
+      	return null;
+    
+    }
+  }
+  
+  var ecommercePlatformName = checkEcommercePlatform();
+  
+  // This script replaces ecommerce-tag on pages with the shopify platform a visitor is using
+  function customizePageForEcommercePlatform(ecommercePlatformName) {
+
+    var wordToInput = ecommercePlatformName.charAt(0).toUpperCase() + ecommercePlatformName.slice(1)
+    var ecommercePlatformTagElements = document.getElementsByClassName('tag-ecommerce-platform');
+    for (var i = 0; i < ecommercePlatformTagElements.length; i++) {
+
+        $(".tag-ecommerce-platform").eq(i).animate({'opacity': 0}, 400, function(){
+            $(this).html(wordToInput).animate({'opacity': 1}, 400);   
+        }); 
+
+    }
+  }
+  
+  // Functions for cookie processing
+  function createEcommercePlatformCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+  }
+
+  function readEcommercePlatformCookie(name) {
+      var nameEQ = name + "=";
+      var ca = document.cookie.split(';');
+      for(var i=0;i < ca.length;i++) {
+          var c = ca[i];
+          while (c.charAt(0)==' ') c = c.substring(1,c.length);
+          if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+      }
+      return null;
+  }
+
+</script>
+
+<script>
+  let widgetTrafficURL = new URL(window.location.href);
+  if (widgetTrafficURL.searchParams.get('utm_source') == 'widget') {
+  	let trafficReferrer = document.referrer || '';
+    let redirectURL = "https://gorgias.io/powered-by?utm_source=widget&referrer=" + trafficReferrer;
+		window.location.replace(redirectURL);
+  } else if ((widgetTrafficURL.searchParams.get('utm_source') == 'shopify_community')) {
+		let redirectURL = "https://gorgias.io/signup?utm_source=shopify_community";
+    window.location.replace(redirectURL);
+  }
+</script>
