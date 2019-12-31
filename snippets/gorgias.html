@@ -265,4 +265,60 @@ document.addEventListener("DOMContentLoaded", function(){
   window.Metadata = window.Metadata || {};
   window.Metadata.pixel = { init, sendData, sendFormData };
 })();
+	
+	
+	//sneaky
+ var Webflow = Webflow || [];
+  Webflow.push(function() {
+		
+    // unbind webflow form handling
+    $('form[name="wf-form-Demo-Form"]').submit(function() {
+    
+      var url = new URL(window.location.href);
 
+      var params = {
+        a1: $('#a1').val(), // website
+        a2: $('#a2').val(), // store
+        a3: $('#a3').val(), // ticket volume
+        name: $('#name').val(),
+        email: $('#email').val(),
+        utm_source: url.searchParams.get('utm_source'),
+        utm_medium: url.searchParams.get('utm_medium') || 'website_demo_form',
+        utm_campaign: url.searchParams.get('utm_campaign')
+      };
+
+      var urlParams = $.param(params);
+
+      var url = 'https://calendly.com/gorgias-sales/live-demo/';
+
+			// IF (Shopify Plus) OR (Shopify + More than 5 tickets)
+      if ((params.a2 === '2') || (params.a2 === '1' && params.a3 != '1')) {
+        
+        console.log('Live demo');
+        url = 'https://calendly.com/gorgias-sales/live-demo';
+        
+      } else {
+      
+      	console.log('Webinar demo');
+        url = 'https://calendly.com/gorgias-sales/webinardemo';
+        
+      }
+      let newUrl = url + '?' + urlParams;
+      
+      analytics.identify({
+        email: $('#email').val(),
+        name: $('#name').val(),
+        website: $('#a1').val()
+      });
+      
+      analytics.track('schedule-a-demo-click', {
+        'type': 'on-page',
+        'redirect url': url,
+        'current url': window.location.href
+      });
+      location.href = url;
+
+      return false
+
+    });
+  });
