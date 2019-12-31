@@ -1,3 +1,11 @@
+<!-- Prevent zoom-in and zoom-out --><script>
+// disable all inputs to make sure the form is not used before the signup script below is not loaded.
+// the inputs will be re-enabled after the script is loaded.
+document.addEventListener("DOMContentLoaded", function(){
+  document.querySelectorAll('input').forEach(function(input) {
+    input.setAttribute('disabled', 'disabled')
+   });
+});
 <!-- Functions to detect ecommerce platform or landing page content & personalize pages based on it -->
 <script>
   
@@ -95,3 +103,166 @@
     window.location.replace(redirectURL);
   }
 </script>
+
+
+
+<-- Just ignore for now->
+	(function() {
+  var baseUrl = "https://platformapi.metadata.io";
+  var initializedForms = [];
+  var ip = "";
+
+  function getUrlParameter(parameter) {
+    var result = new RegExp("[\\?&]" + parameter + "=([^&#]*)").exec(
+      window.location.search
+    );
+
+    return result === null
+      ? undefined
+      : decodeURIComponent(result[1].replace(/\+/g, " "));
+  }
+
+  function getFormData(formEl) {
+    var data = {};
+    var elements = formEl.querySelectorAll("input[name],select[name]");
+
+    Array.prototype.forEach.call(elements, function(e) {
+      data[e.id || e.name] = e.value;
+    });
+
+    return data;
+  }
+
+  function debounce(func, wait, immediate) {
+    var timeout;
+
+    return function() {
+      var context = this;
+      var args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) func.apply(context, args);
+      };
+      var callNow = immediate && !timeout;
+
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+
+      if (callNow) {
+        func.apply(context, args);
+      }
+    };
+  }
+
+  function fetchTrackingIp() {
+    var xhr = new XMLHttpRequest();
+
+    xhr.open("GET", baseUrl + "/tracking/ip");
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        ip = xhr.responseText;
+      }
+    };
+
+    xhr.send();
+  }
+
+  function sendData(sfv, callback) {
+    var data = {
+      cid: getUrlParameter("cid"),
+      ip: ip,
+      lpu: window.location.href,
+      metadata_cid: getUrlParameter("metadata_cid"),
+      sfv: sfv
+    };
+
+    if (!data.cid && !data.metadata_cid) {
+      console.warn(
+        "Data not sent, check cid/metadata_cid",
+        JSON.stringify(data)
+      );
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+
+    // TODO: consider using fetch api with "keepalive: true"
+    // when it's widely supported instead of sync request
+    xhr.open("POST", baseUrl + "/insight", false);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.onload = function() {
+      if (xhr.status === 200) {
+        callback && callback();
+      }
+    };
+
+    xhr.send(JSON.stringify(data));
+  }
+
+  function sendFormData(formEl, callback) {
+    sendData(getFormData(formEl), callback);
+  }
+
+  function submitHandler(e) {
+    sendData(getFormData(e.target));
+  }
+
+  function initForms() {
+    var forms = window.document.querySelectorAll("form");
+
+    Array.prototype.forEach.call(forms, function(form) {
+      var initialized = initializedForms.indexOf(form) !== -1;
+
+      if (!initialized) {
+        form.addEventListener("submit", submitHandler);
+        initializedForms.push(form);
+      }
+    });
+  }
+
+  function initHubspotForms() {
+    function onWindowMessage(e) {
+      if (
+        e.data.type === "hsFormCallback" &&
+        e.data.eventName === "onFormSubmitted"
+      ) {
+        var formEl = window.document.querySelector(
+          'form[data-form-id="' + e.data.id + '"]'
+        );
+
+        sendFormData(formEl);
+      }
+    }
+
+    window.addEventListener("message", onWindowMessage, false);
+  }
+
+  function init(options) {
+    if (options.baseUrl) {
+      baseUrl = options.baseUrl;
+    }
+
+    fetchTrackingIp();
+
+    if (options.initForms !== false) {
+      if ("hubspot" in window) {
+        initHubspotForms();
+      } else {
+        initForms();
+
+        new MutationObserver(debounce(initForms, 1000)).observe(
+          window.document.body,
+          { subtree: true, childList: true }
+        );
+      }
+    }
+
+    if (options.onReady) {
+      options.onReady();
+    }
+  }
+
+  window.Metadata = window.Metadata || {};
+  window.Metadata.pixel = { init, sendData, sendFormData };
+})();
+
