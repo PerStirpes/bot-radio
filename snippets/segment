@@ -1,0 +1,16 @@
+<script type="text/javascript">
+              var SEGMENT_EXPERIMENT_VARIATION;!function(){
+              var o=window.location.pathname,
+              e=["control","test"];if("/"===o||"/unified-customer-data/"===o){
+              var n,t,i,a=(n="mocha-homepage",
+              (t=document.cookie.match("(^|;) ?"+n+"=([^;]*)(;|$)"))?t[2]:null);a&&-1!==e.indexOf(a)||function(o,e,n){var t=new Date;t.setTime(t.getTime()+864e5*n),document.cookie=o+"="+e+";path=/;expires="+t.toGMTString()}("mocha-homepage",a=(i=e)[Math.floor(Math.random()*i.length)],30),SEGMENT_EXPERIMENT_VARIATION="mocha-homepage-"+a,"test"===a&&"/unified-customer-data/"!==o?window.location="/unified-customer-data/":"control"===a&&"/"!==o&&(window.location="/")}}();
+            </script>
+            
+            
+            
+            <script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&&console.error&&console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","user","reset","group","track","ready","alias","debug","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t<analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t,e){var n=document.createElement("script");n.type="text/javascript";n.async=!0;n.src="https://cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(n,a);analytics._loadOptions=e};analytics.SNIPPET_VERSION="4.1.0";
+analytics.page("Demo Page", { cms: true, seoTitle: "Request a Product Demo From Our Sales Team | Segment" });
+analytics.identify('0PAMSCaTdE',  {segment_experiment: window.SEGMENT_EXPERIMENT_VARIATION});
+}}();
+</script>
